@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.ScrollPane?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.PhongController"
+      stylesheets="@../css/style.css"
+      VBox.vgrow="ALWAYS">
+
+    <!-- ── Phase 3: Page Section Header ── -->
+    <HBox styleClass="table-page-header" alignment="CENTER_LEFT" spacing="14">
+        <Label text="🏠" style="-fx-font-size: 22px;" />
+        <VBox spacing="3">
+            <Label text="Quản lý Phòng" styleClass="page-section-title" />
+            <Label text="Tình trạng, sức chứa và giá thuê từng phòng" styleClass="page-section-sub" />
+        </VBox>
+    </HBox>
+    <!-- ── Toolbar ── -->
+    <HBox styleClass="toolbar" spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="txtSearch" styleClass="search-field"
+                   promptText="🔍  Tìm theo mã phòng, tên phòng, tầng..." onAction="#handleSearch"
+                   prefWidth="300" />
+        <ComboBox fx:id="cboFilter" prefWidth="150" promptText="Trạng thái" />
+        <Button text="🔍  Tìm kiếm" styleClass="btn-primary"  onAction="#handleSearch" />
+        <Button text="🔄  Làm mới"  styleClass="btn-outline"  onAction="#handleRefresh"/>
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="➕  Thêm phòng"  styleClass="btn-success" onAction="#handleAdd"    />
+        <Button text="✏  Sửa"          styleClass="btn-warning" onAction="#handleEdit"   />
+        <Button text="🗑  Xoá"          styleClass="btn-danger"  onAction="#handleDelete" />
+        <Button text="🔧  Bảo trì"      styleClass="btn-outline"  onAction="#handleBaoTri" />
+        <Button text="📥  Xuất Excel"   styleClass="btn-outline"  onAction="#handleExport" />
+    </HBox>
+
+    <!-- ── Summary chips ── -->
+    <HBox styleClass="summary-chip-bar" spacing="10" alignment="CENTER_LEFT">
+        <Label text="🏠  Tổng hợp:" style="-fx-font-size: 12px; -fx-text-fill: #6B7280; -fx-font-weight: bold;" />
+        <Label fx:id="chipTong"     text="Tổng: 0"      styleClass="chip,chip-blue"   />
+        <Label fx:id="chipTrong"    text="Trống: 0"     styleClass="chip,chip-green"  />
+        <Label fx:id="chipDay"      text="Đã đầy: 0"    styleClass="chip,chip-orange" />
+        <Label fx:id="chipBaoTri"   text="Bảo trì: 0"   styleClass="chip,chip-red"    />
+        <Region HBox.hgrow="ALWAYS" />
+        <Label fx:id="lblCount" text="Tổng: 0 phòng"
+               style="-fx-font-size: 12px; -fx-text-fill: #9CA3AF;" />
+    </HBox>
+
+    <!-- ── Table ── -->
+    <ScrollPane fitToWidth="true" fitToHeight="true" VBox.vgrow="ALWAYS" styleClass="content-scroll">
+        <VBox style="-fx-padding: 16;" spacing="0">
+            <TableView fx:id="tblPhong" styleClass="table-view" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colMaPhong"    text="Mã phòng"    prefWidth="95"  />
+                    <TableColumn fx:id="colTenPhong"   text="Tên phòng"   prefWidth="130" />
+                    <TableColumn fx:id="colTang"       text="Tầng"        prefWidth="60"  />
+                    <TableColumn fx:id="colLoaiPhong"  text="Loại phòng"  prefWidth="105" />
+                    <TableColumn fx:id="colSucChua"    text="Sức chứa"    prefWidth="80"  />
+                    <TableColumn fx:id="colHienTai"    text="Hiện tại"    prefWidth="80"  />
+                    <TableColumn fx:id="colChoTrong"   text="Còn trống"   prefWidth="90"  />
+                    <TableColumn fx:id="colOccupancy"  text="Lấp đầy"     prefWidth="100" />
+                    <TableColumn fx:id="colGiaThue"    text="Giá/tháng"   prefWidth="120" />
+                    <TableColumn fx:id="colTrangThai"  text="Trạng thái"  prefWidth="115" />
+                </columns>
+                <placeholder>
+                    <VBox styleClass="empty-state" alignment="CENTER" spacing="10">
+                        <Label text="🏠" styleClass="empty-state-icon" />
+                        <Label text="Không tìm thấy phòng nào" styleClass="empty-state-title" />
+                        <Label text="Thử thay đổi bộ lọc hoặc từ khóa tìm kiếm" styleClass="empty-state-sub" />
+                    </VBox>
+                </placeholder>
+            </TableView>
+        </VBox>
+    </ScrollPane>
+</VBox>

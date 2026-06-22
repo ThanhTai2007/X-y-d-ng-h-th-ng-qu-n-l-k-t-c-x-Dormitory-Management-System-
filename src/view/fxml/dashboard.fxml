@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+
+<!--
+    Phase 4 — Smart Features Dashboard
+    All Phase 3 fx:ids preserved.
+    Phase 4 additions:
+      ROW 0: Quick Actions (qaCardSV, qaCardPhong, qaCardHD, qaCardTT, qaCardVP)
+      ROW 5: Activity Timeline (paneTimeline)
+-->
+<ScrollPane xmlns:fx="http://javafx.com/fxml"
+            fx:controller="controller.DashboardController"
+            fitToWidth="true" fitToHeight="true"
+            styleClass="content-scroll"
+            stylesheets="@../css/style.css">
+
+    <VBox styleClass="content-area" spacing="20">
+
+        <!-- ── ROW 0: Quick Actions ── -->
+        <HBox spacing="14" style="-fx-padding: 0 0 4 0;">
+            <VBox fx:id="qaCardSV" styleClass="quick-action-card" HBox.hgrow="ALWAYS"
+                  alignment="CENTER" spacing="8" onMouseClicked="#handleQuickSinhVien">
+                <Label text="◇" styleClass="quick-action-icon" />
+                <Label text="Sinh viên" styleClass="quick-action-label" />
+                <Label text="Quản lý sinh viên" styleClass="quick-action-sub" />
+            </VBox>
+            <VBox fx:id="qaCardPhong" styleClass="quick-action-card" HBox.hgrow="ALWAYS"
+                  alignment="CENTER" spacing="8" onMouseClicked="#handleQuickPhong">
+                <Label text="⌂" styleClass="quick-action-icon" />
+                <Label text="Phòng" styleClass="quick-action-label" />
+                <Label text="Tình trạng phòng" styleClass="quick-action-sub" />
+            </VBox>
+            <VBox fx:id="qaCardHD" styleClass="quick-action-card" HBox.hgrow="ALWAYS"
+                  alignment="CENTER" spacing="8" onMouseClicked="#handleQuickHopDong">
+                <Label text="§" styleClass="quick-action-icon" />
+                <Label text="Hợp đồng" styleClass="quick-action-label" />
+                <Label text="Quản lý HĐ" styleClass="quick-action-sub" />
+            </VBox>
+            <VBox fx:id="qaCardTT" styleClass="quick-action-card" HBox.hgrow="ALWAYS"
+                  alignment="CENTER" spacing="8" onMouseClicked="#handleQuickThanhToan">
+                <Label text="₫" styleClass="quick-action-icon" />
+                <Label text="Thanh toán" styleClass="quick-action-label" />
+                <Label text="Hóa đơn &amp; Thu" styleClass="quick-action-sub" />
+            </VBox>
+            <VBox fx:id="qaCardVP" styleClass="quick-action-card" HBox.hgrow="ALWAYS"
+                  alignment="CENTER" spacing="8" onMouseClicked="#handleQuickViPham">
+                <Label text="!" styleClass="quick-action-icon" />
+                <Label text="Vi phạm" styleClass="quick-action-label" />
+                <Label text="Ghi nhận VP" styleClass="quick-action-sub" />
+            </VBox>
+        </HBox>
+
+        <!-- ── ROW 1: Welcome + greeting badge ── -->
+        <HBox spacing="12" alignment="CENTER_LEFT" style="-fx-padding: 0 0 4 0;">
+            <VBox spacing="3" HBox.hgrow="ALWAYS">
+                <Label text="Tổng quan hệ thống"
+                       styleClass="dashboard-main-title"
+                       style="-fx-font-size: 22px; -fx-font-weight: bold;
+                              -fx-text-fill: #0F172A; -fx-letter-spacing: -0.5px;" />
+                <Label text="Dữ liệu thời gian thực · Cập nhật tự động"
+                       styleClass="dashboard-main-subtitle"
+                       style="-fx-font-size: 12px; -fx-text-fill: #94A3B8;" />
+            </VBox>
+        </HBox>
+
+        <!-- ── ROW 2: Stat Cards ── -->
+        <HBox spacing="14">
+
+            <!-- Card 1: Sinh viên (blue) -->
+            <VBox styleClass="stat-card,card-blue" HBox.hgrow="ALWAYS" spacing="5">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="👤" styleClass="stat-icon" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label text="▲ Tổng" styleClass="stat-trend-up" />
+                </HBox>
+                <Label fx:id="lblTongSinhVien" text="0" styleClass="stat-value" />
+                <Label text="Tổng Sinh viên" styleClass="stat-label" />
+                <Label text="Đang cư trú tại KTX" styleClass="stat-sub" />
+                <Label text="↑ Đang học" styleClass="insight-tag insight-up"
+                       style="-fx-padding: 3 10;" />
+            </VBox>
+
+            <!-- Card 2: Phòng trống (green) + occupancy progress bar -->
+            <VBox styleClass="stat-card,card-green" HBox.hgrow="ALWAYS" spacing="5">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="🏠" styleClass="stat-icon" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label text="Sẵn sàng"
+                           style="-fx-font-size: 10px; -fx-text-fill: #16A34A;
+                                  -fx-font-weight: bold;" />
+                </HBox>
+                <Label fx:id="lblPhongTrong" text="0" styleClass="stat-value" />
+                <Label text="Phòng trống" styleClass="stat-label" />
+                <Label fx:id="lblTongPhong" text="/ 0 phòng" styleClass="stat-sub" />
+                <VBox spacing="4" style="-fx-padding: 4 0 0 0;">
+                    <StackPane styleClass="progress-track" prefHeight="6">
+                        <Region fx:id="barOccupancy" styleClass="progress-fill-green"
+                                prefHeight="6" prefWidth="0"
+                                StackPane.alignment="CENTER_LEFT" />
+                    </StackPane>
+                    <HBox alignment="CENTER_RIGHT">
+                        <Label fx:id="lblOccupancyPct" text="-- % lấp đầy"
+                               styleClass="progress-pct-label" />
+                    </HBox>
+                </VBox>
+            </VBox>
+
+            <!-- Card 3: Doanh thu (orange) -->
+            <VBox styleClass="stat-card,card-orange" HBox.hgrow="ALWAYS" spacing="5">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="💰" styleClass="stat-icon" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label text="Tháng này"
+                           style="-fx-font-size: 10px; -fx-text-fill: #D97706;
+                                  -fx-font-weight: bold;" />
+                </HBox>
+                <Label fx:id="lblDoanhThuThang" text="0 đ" styleClass="stat-value"
+                       style="-fx-font-size: 18px;" />
+                <Label text="Doanh thu tháng" styleClass="stat-label" />
+                <Label fx:id="lblDoanhThuNam" text="Năm: 0 đ" styleClass="stat-sub" />
+                <Label text="💹 Xem biểu đồ ↓" styleClass="insight-tag insight-neutral"
+                       style="-fx-padding: 3 10;" />
+            </VBox>
+
+            <!-- Card 4: Hóa đơn trễ (red) -->
+            <VBox styleClass="stat-card,card-red" HBox.hgrow="ALWAYS" spacing="5">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="⚠" styleClass="stat-icon" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label text="Cần xử lý"
+                           style="-fx-font-size: 10px; -fx-text-fill: #DC2626;
+                                  -fx-font-weight: bold;" />
+                </HBox>
+                <Label fx:id="lblHoaDonTreHan" text="0" styleClass="stat-value" />
+                <Label text="Hóa đơn trễ hạn" styleClass="stat-label" />
+                <Label fx:id="lblViPhamChuaXuLy" text="0 vi phạm chưa xử lý"
+                       styleClass="stat-sub" />
+                <Label fx:id="lblOverdueInsight" text=""
+                       styleClass="insight-tag"
+                       visible="false" managed="false" />
+            </VBox>
+
+            <!-- Card 5: Hợp đồng (purple) + contract rate progress bar -->
+            <VBox styleClass="stat-card,card-purple" HBox.hgrow="ALWAYS" spacing="5">
+                <HBox spacing="10" alignment="CENTER_LEFT">
+                    <Label text="📄" styleClass="stat-icon" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Label text="Hiệu lực"
+                           style="-fx-font-size: 10px; -fx-text-fill: #7C3AED;
+                                  -fx-font-weight: bold;" />
+                </HBox>
+                <Label fx:id="lblHopDongActive" text="0" styleClass="stat-value" />
+                <Label text="Hợp đồng hiệu lực" styleClass="stat-label" />
+                <Label text="Đang hoạt động" styleClass="stat-sub" />
+                <VBox spacing="4" style="-fx-padding: 4 0 0 0;">
+                    <StackPane styleClass="progress-track" prefHeight="6">
+                        <Region fx:id="barContract" styleClass="progress-fill-purple"
+                                prefHeight="6" prefWidth="0"
+                                StackPane.alignment="CENTER_LEFT" />
+                    </StackPane>
+                    <HBox alignment="CENTER_RIGHT">
+                        <Label fx:id="lblContractRate" text="-- % có HĐ"
+                               styleClass="progress-pct-label" />
+                    </HBox>
+                </VBox>
+            </VBox>
+
+        </HBox>
+
+        <!-- ── ROW 3: Charts ── -->
+        <HBox spacing="14">
+
+            <!-- Bar chart: Revenue -->
+            <VBox styleClass="section-card" HBox.hgrow="ALWAYS" spacing="0">
+                <HBox styleClass="section-header" alignment="CENTER_LEFT" spacing="10">
+                    <VBox spacing="2" HBox.hgrow="ALWAYS">
+                        <Label text="📈  Doanh thu 12 tháng gần nhất"
+                               styleClass="section-title" />
+                        <Label text="Thống kê theo tháng · Đơn vị: VNĐ"
+                               styleClass="section-sub" />
+                    </VBox>
+                    <Label fx:id="lblChartYearBadge" text="Cả năm: --"
+                           styleClass="chart-metric-badge" />
+                </HBox>
+                <StackPane prefHeight="260" styleClass="chart-shell">
+                    <BarChart fx:id="chartDoanhThu"
+                              style="-fx-padding: 10 12 4 4;"
+                              prefHeight="260"
+                              animated="true"
+                              legendVisible="false">
+                        <xAxis><CategoryAxis /></xAxis>
+                        <yAxis><NumberAxis label="VNĐ" /></yAxis>
+                    </BarChart>
+                    <VBox fx:id="emptyRevenueChart" styleClass="chart-empty-state"
+                          visible="false" managed="false" alignment="CENTER" spacing="8">
+                        <Label text="╋" styleClass="chart-empty-icon" />
+                        <Label text="Chưa có dữ liệu doanh thu" styleClass="chart-empty-title" />
+                        <Label text="Biểu đồ sẽ hiển thị khi phát sinh thanh toán"
+                               styleClass="chart-empty-sub" />
+                    </VBox>
+                </StackPane>
+                <VBox styleClass="chart-subsection" spacing="0">
+                    <HBox styleClass="chart-subsection-header" alignment="CENTER_LEFT" spacing="8">
+                        <VBox spacing="1" HBox.hgrow="ALWAYS">
+                            <Label text="Xu hướng doanh thu" styleClass="chart-subtitle" />
+                            <Label text="Đường xu hướng theo 12 tháng gần nhất" styleClass="chart-subcopy" />
+                        </VBox>
+                        <Label text="Trend" styleClass="chart-mini-badge" />
+                    </HBox>
+                    <StackPane prefHeight="210" styleClass="chart-shell line-chart-shell">
+                        <LineChart fx:id="chartRevenueTrend"
+                                   prefHeight="210"
+                                   animated="true"
+                                   createSymbols="true"
+                                   legendVisible="false"
+                                   styleClass="premium-line-chart">
+                            <xAxis><CategoryAxis /></xAxis>
+                            <yAxis><NumberAxis label="VNĐ" /></yAxis>
+                        </LineChart>
+                        <VBox fx:id="emptyRevenueTrendChart" styleClass="chart-empty-state chart-empty-state-small"
+                              visible="false" managed="false" alignment="CENTER" spacing="7">
+                            <Label text="+" styleClass="chart-empty-icon" />
+                            <Label text="Chưa có dữ liệu xu hướng" styleClass="chart-empty-title" />
+                            <Label text="Đường xu hướng sẽ xuất hiện khi có doanh thu"
+                                   styleClass="chart-empty-sub" />
+                        </VBox>
+                    </StackPane>
+                </VBox>
+            </VBox>
+
+            <!-- Pie chart: Room status -->
+            <VBox styleClass="section-card" prefWidth="330" spacing="0">
+                <HBox styleClass="section-header" alignment="CENTER_LEFT" spacing="10">
+                    <VBox spacing="2" HBox.hgrow="ALWAYS">
+                        <Label text="🏠  Tình trạng phòng" styleClass="section-title" />
+                        <Label text="Phân bổ sức chứa hiện tại" styleClass="section-sub" />
+                    </VBox>
+                    <Label fx:id="lblChartOccupancyBadge" text="-- % đầy"
+                           styleClass="chart-metric-badge-green" />
+                </HBox>
+                <StackPane prefHeight="290" styleClass="chart-shell">
+                    <PieChart fx:id="chartPhong"
+                              animated="true"
+                              prefHeight="290"
+                              style="-fx-padding: 10 8;" />
+                    <VBox fx:id="emptyRoomChart" styleClass="chart-empty-state"
+                          visible="false" managed="false" alignment="CENTER" spacing="8">
+                        <Label text="╋" styleClass="chart-empty-icon" />
+                        <Label text="Chưa có dữ liệu phòng" styleClass="chart-empty-title" />
+                        <Label text="Thêm phòng để xem phân bổ trạng thái"
+                               styleClass="chart-empty-sub" />
+                    </VBox>
+                </StackPane>
+            </VBox>
+
+        </HBox>
+
+        <!-- ── ROW 4: Alert Panels ── -->
+        <HBox spacing="14">
+
+            <!-- Panel: Hợp đồng sắp hết hạn -->
+            <VBox styleClass="section-card" HBox.hgrow="ALWAYS" spacing="0">
+                <HBox styleClass="alert-panel-header" alignment="CENTER_LEFT" spacing="10">
+                    <Region styleClass="alert-accent-expiring" />
+                    <VBox spacing="2" HBox.hgrow="ALWAYS">
+                        <Label text="📅  Hợp đồng sắp hết hạn (30 ngày)"
+                               styleClass="alert-panel-title" />
+                        <Label text="Cần gia hạn hoặc thanh lý"
+                               style="-fx-font-size: 11px; -fx-text-fill: #94A3B8;" />
+                    </VBox>
+                    <Label fx:id="lblBadgeHopDong" text="0"
+                           styleClass="alert-count-badge,badge-warning" />
+                </HBox>
+                <ScrollPane fitToWidth="true" prefHeight="210" styleClass="alert-scroll">
+                    <VBox fx:id="paneHopDongSapHetHan" spacing="0" />
+                </ScrollPane>
+            </VBox>
+
+            <!-- Panel: Hóa đơn quá hạn -->
+            <VBox styleClass="section-card" HBox.hgrow="ALWAYS" spacing="0">
+                <HBox styleClass="alert-panel-header" alignment="CENTER_LEFT" spacing="10">
+                    <Region styleClass="alert-accent-overdue" />
+                    <VBox spacing="2" HBox.hgrow="ALWAYS">
+                        <Label text="💸  Hóa đơn quá hạn chưa thu"
+                               styleClass="alert-panel-title" />
+                        <Label text="Cần thu hồi và xử lý ngay"
+                               style="-fx-font-size: 11px; -fx-text-fill: #94A3B8;" />
+                    </VBox>
+                    <Label fx:id="lblBadgeHoaDon" text="0"
+                           styleClass="alert-count-badge,badge-danger" />
+                </HBox>
+                <ScrollPane fitToWidth="true" prefHeight="210" styleClass="alert-scroll">
+                    <VBox fx:id="paneHoaDonQuaHan" spacing="0" />
+                </ScrollPane>
+            </VBox>
+
+        </HBox>
+
+        <!-- ── ROW 5: Activity Timeline ── -->
+        <VBox styleClass="section-card" spacing="0">
+            <HBox styleClass="section-header" alignment="CENTER_LEFT" spacing="10">
+                <VBox spacing="2" HBox.hgrow="ALWAYS">
+                    <Label text="📡  Hoạt động cần chú ý" styleClass="section-title" />
+                    <Label text="Dữ liệu tổng hợp từ hệ thống · Tự động cập nhật"
+                           styleClass="section-sub" />
+                </VBox>
+                <Label text="Xem chi tiết ↓"
+                       style="-fx-font-size: 11.5px; -fx-text-fill: #3B82F6;
+                              -fx-cursor: hand; -fx-font-weight: bold;" />
+            </HBox>
+            <ScrollPane fitToWidth="true" prefHeight="210" styleClass="alert-scroll">
+                <VBox fx:id="paneTimeline" spacing="6" style="-fx-padding: 10;" />
+            </ScrollPane>
+        </VBox>
+
+    </VBox>
+</ScrollPane>

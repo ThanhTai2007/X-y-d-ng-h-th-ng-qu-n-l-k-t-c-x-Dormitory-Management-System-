@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml"
+            fx:id="rootPane"
+            fx:controller="controller.MainController"
+            stylesheets="@../css/style.css"
+            prefWidth="1340" prefHeight="800"
+            style="-fx-background-color: #080F25;">
+
+    <!-- ═══ SIDEBAR ═══ -->
+    <left>
+        <VBox styleClass="sidebar" prefWidth="248">
+
+            <!-- Logo -->
+            <VBox styleClass="sidebar-logo-box" alignment="CENTER">
+                <Label text="🏠  KTX Manager" styleClass="sidebar-logo-text" />
+                <Label text="HỆ THỐNG QUẢN LÝ KÝ TÚC XÁ" styleClass="sidebar-subtitle" />
+            </VBox>
+
+            <!-- Thin divider -->
+            <Region styleClass="sidebar-divider" />
+
+            <!-- User avatar + info -->
+            <HBox styleClass="sidebar-user-box" spacing="12" alignment="CENTER_LEFT">
+                <Label fx:id="lblAvatar" text="A" styleClass="sidebar-avatar" />
+                <VBox spacing="2">
+                    <Label fx:id="lblUserName" text="Xin chào, Admin" styleClass="sidebar-user-name" />
+                    <Label fx:id="lblUserRole" text="Quản trị viên"   styleClass="sidebar-user-role" />
+                </VBox>
+            </HBox>
+
+            <!-- Thin divider -->
+            <Region styleClass="sidebar-divider" />
+
+            <!-- ── TỔNG QUAN section ── -->
+            <Label text="TỔNG QUAN" styleClass="sidebar-section" />
+            <VBox styleClass="sidebar-nav-group">
+                <Button fx:id="btnDashboard" text="📊   Dashboard" styleClass="sidebar-btn" onAction="#showDashboard" />
+            </VBox>
+
+            <!-- ── QUẢN LÝ section ── -->
+            <Label text="QUẢN LÝ" styleClass="sidebar-section" />
+            <VBox styleClass="sidebar-nav-group">
+                <Button fx:id="btnSinhVien"  text="👤   Sinh viên"   styleClass="sidebar-btn" onAction="#showSinhVien"  />
+                <Button fx:id="btnPhong"     text="🏠   Phòng"        styleClass="sidebar-btn" onAction="#showPhong"     />
+                <Button fx:id="btnHopDong"   text="📄   Hợp đồng"     styleClass="sidebar-btn" onAction="#showHopDong"   />
+                <Button fx:id="btnThanhToan" text="💸   Thanh toán"   styleClass="sidebar-btn" onAction="#showThanhToan" />
+                <Button fx:id="btnViPham"    text="🚨   Vi phạm"      styleClass="sidebar-btn" onAction="#showViPham"    />
+            </VBox>
+
+            <!-- ── HỆ THỐNG section ── -->
+            <Label text="HỆ THỐNG" styleClass="sidebar-section" />
+            <VBox styleClass="sidebar-nav-group">
+                <Button fx:id="btnTaiKhoan" text="🔐   Tài khoản" styleClass="sidebar-btn" onAction="#showTaiKhoan" />
+            </VBox>
+
+            <!-- Push rest to bottom -->
+            <Region VBox.vgrow="ALWAYS" />
+
+
+            <!-- Bottom actions -->
+            <VBox styleClass="sidebar-nav-group" style="-fx-padding: 8 10 6 10;">
+                <Button text="📥   Xuất Excel"
+                        styleClass="sidebar-btn"
+                        onAction="#handleExport"
+                        style="-fx-text-fill: rgba(147,210,255,0.9);" />
+                <Button text="🚪   Đăng xuất"
+                        styleClass="sidebar-btn,sidebar-logout"
+                        onAction="#handleLogout" />
+            </VBox>
+
+            <Label text="© 2026-2027 Dormitory Management System" styleClass="sidebar-version" />
+        </VBox>
+    </left>
+
+    <!-- ═══ MAIN CONTENT ═══ -->
+    <center>
+        <VBox styleClass="app-content-shell">
+            <!-- Top bar -->
+            <HBox styleClass="top-bar" alignment="CENTER_LEFT" spacing="12">
+                <!-- Title + breadcrumb stack -->
+                <VBox spacing="1" HBox.hgrow="ALWAYS">
+                    <Label fx:id="lblPageTitle" text="Dashboard" styleClass="page-title" />
+                    <Label text="KTX Manager · Hệ thống quản lý ký túc xá" styleClass="page-breadcrumb" />
+                </VBox>
+                <!-- Notification bell + badge -->
+                <StackPane style="-fx-pref-width: 42; -fx-pref-height: 40;">
+                    <Button fx:id="btnBell" text="🔔" styleClass="bell-btn"
+                            onAction="#handleShowNotifications" />
+                    <Label fx:id="lblNotifBadge" text="0" styleClass="notif-badge"
+                           visible="false" managed="false"
+                           StackPane.alignment="TOP_RIGHT"
+                           style="-fx-translate-x: -1; -fx-translate-y: 1;" />
+                </StackPane>
+                <!-- Clock badge -->
+                <Label fx:id="lblClock" text="00:00:00" styleClass="clock-label" />
+                <!-- Premium account row (Phase 2) -->
+                <StackPane>
+                    <HBox fx:id="topbarAccountRow" styleClass="topbar-account-row" alignment="CENTER_LEFT" spacing="9"
+                          onMouseClicked="#handleShowAccountMenu">
+                        <Label fx:id="lblTopbarAvatar" text="A" styleClass="topbar-avatar-sm" />
+                        <VBox spacing="1">
+                            <Label fx:id="lblCurrentUser" text="Admin" styleClass="topbar-account-name" />
+                            <Label text="● Online" styleClass="topbar-account-online" />
+                        </VBox>
+                    </HBox>
+                </StackPane>
+            </HBox>
+
+            <!-- Content pane — StackPane allows overlay (toast, loading) -->
+            <StackPane fx:id="contentArea" VBox.vgrow="ALWAYS" />
+        </VBox>
+    </center>
+
+</BorderPane>

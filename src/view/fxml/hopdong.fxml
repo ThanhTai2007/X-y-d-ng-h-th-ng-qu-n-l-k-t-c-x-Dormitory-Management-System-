@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.HopDongController"
+      stylesheets="@../css/style.css"
+      VBox.vgrow="ALWAYS">
+
+    <!-- ── Phase 3: Page Section Header ── -->
+    <HBox styleClass="table-page-header" alignment="CENTER_LEFT" spacing="14">
+        <Label text="📄" style="-fx-font-size: 22px;" />
+        <VBox spacing="3">
+            <Label text="Quản lý Hợp đồng" styleClass="page-section-title" />
+            <Label text="Theo dõi và xử lý hợp đồng thuê phòng" styleClass="page-section-sub" />
+        </VBox>
+    </HBox>
+    <!-- ── TOOLBAR ── -->
+    <HBox styleClass="toolbar" spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="txtSearch" styleClass="search-field"
+                   promptText="🔍  Tìm theo mã HĐ, mã SV, tên sinh viên..."
+                   onAction="#handleSearch" />
+        <ComboBox fx:id="cboFilter" prefWidth="170" promptText="Trạng thái" />
+        <Button text="Tìm kiếm"   styleClass="btn-outline"  onAction="#handleSearch"   />
+        <Region HBox.hgrow="ALWAYS" />
+        <Button text="➕  Tạo HĐ"   styleClass="btn-success"  onAction="#handleAdd"     />
+        <Button text="📋  Chi tiết" styleClass="btn-primary"  onAction="#handleDetail"  />
+        <Button text="⏳  Gia hạn"  styleClass="btn-outline"  onAction="#handleGiaHan"  />
+        <Button text="❌  Chấm dứt" styleClass="btn-danger"   onAction="#handleTerminate" />
+        <Button text="🔄  Làm mới"  styleClass="btn-outline"  onAction="#handleRefresh" />
+    </HBox>
+
+    <!-- ── SUMMARY ROW ── -->
+    <HBox styleClass="summary-chip-bar" spacing="24" alignment="CENTER_LEFT">
+        <Label fx:id="lblTongHD"      text="Tổng: 0 hợp đồng"
+               style="-fx-font-size: 12px; -fx-text-fill: #6B7280;" />
+        <Label text="|" style="-fx-text-fill: #D1D5DB;" />
+        <Label fx:id="lblHDActive"    text="🟢 Active: 0"
+               style="-fx-font-size: 12px; -fx-text-fill: #16A34A; -fx-font-weight: bold;" />
+        <Label text="|" style="-fx-text-fill: #D1D5DB;" />
+        <Label fx:id="lblHDExpired"   text="⚪ Hết hạn: 0"
+               style="-fx-font-size: 12px; -fx-text-fill: #6B7280;" />
+        <Label text="|" style="-fx-text-fill: #D1D5DB;" />
+        <Label fx:id="lblHDTerminated" text="🔴 Chấm dứt: 0"
+               style="-fx-font-size: 12px; -fx-text-fill: #DC2626;" />
+    </HBox>
+
+    <!-- ── TABLE ── -->
+    <ScrollPane fitToWidth="true" fitToHeight="true"
+                VBox.vgrow="ALWAYS" styleClass="content-scroll">
+        <VBox style="-fx-padding: 16;" spacing="0">
+            <TableView fx:id="tblHopDong" styleClass="table-view" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colMaHD"      text="Mã HĐ"          prefWidth="105" />
+                    <TableColumn fx:id="colMaSV"       text="Mã SV"          prefWidth="95"  />
+                    <TableColumn fx:id="colTenSV"      text="Tên sinh viên"  prefWidth="170" />
+                    <TableColumn fx:id="colPhong"      text="Phòng"          prefWidth="80"  />
+                    <TableColumn fx:id="colNgayBD"     text="Ngày bắt đầu"   prefWidth="110" />
+                    <TableColumn fx:id="colNgayKT"     text="Ngày kết thúc"  prefWidth="110" />
+                    <TableColumn fx:id="colGiaThue"    text="Giá thuê/th"    prefWidth="115" />
+                    <TableColumn fx:id="colTienCoc"    text="Tiền cọc"       prefWidth="105" />
+                    <TableColumn fx:id="colConLai"     text="Còn lại (th)"   prefWidth="95"  />
+                    <TableColumn fx:id="colTrangThai"  text="Trạng thái"     prefWidth="120" />
+                </columns>
+                <placeholder>
+                    <Label text="Chưa có hợp đồng nào"
+                           style="-fx-text-fill: #9CA3AF; -fx-font-size: 14px;" />
+                </placeholder>
+            </TableView>
+        </VBox>
+    </ScrollPane>
+
+</VBox>

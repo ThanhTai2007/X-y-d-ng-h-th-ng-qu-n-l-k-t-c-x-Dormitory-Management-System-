@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="KTX Manager (App)" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="App" />
+    <module name="Dormitory_Management_System" />
+    <option name="PROGRAM_PARAMETERS" value=" " />
+    <shortenClasspath name="NONE" />
+    <option name="VM_PARAMETERS" value="--module-path &quot;C:\javafx-sdk-17.0.19\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

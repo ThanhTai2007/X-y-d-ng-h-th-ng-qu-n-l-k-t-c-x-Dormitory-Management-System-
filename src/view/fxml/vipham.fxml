@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="controller.ViPhamController"
+      styleClass="content-area" spacing="16"
+      stylesheets="@../css/style.css">
+
+    <!-- ── Phase 3: Page Section Header ── -->
+    <HBox styleClass="table-page-header" alignment="CENTER_LEFT" spacing="14"
+          style="-fx-margin: -16 -16 0 -16;">
+        <Label text="⚠️" style="-fx-font-size: 22px;" />
+        <VBox spacing="3">
+            <Label text="Quản lý Vi phạm" styleClass="page-section-title" />
+            <Label text="Ghi nhận và xử lý vi phạm nội quy ký túc xá" styleClass="page-section-sub" />
+        </VBox>
+    </HBox>
+
+    <!-- ── Thanh tìm kiếm & lọc ── -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <TextField fx:id="txtSearch" promptText="🔍  Tìm tên sinh viên, mã SV, mã VP..."
+                   prefWidth="320" onAction="#handleSearch"
+                   styleClass="search-field" />
+        <ComboBox fx:id="cboFilter" prefWidth="160" />
+        <Button text="🔍  Tìm kiếm"  styleClass="btn-primary" onAction="#handleSearch" />
+        <Button text="🔄  Làm mới"   styleClass="btn-secondary" onAction="#handleRefresh" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Button fx:id="btnAdd" text="➕  Ghi nhận vi phạm" styleClass="btn-success" onAction="#handleAdd" />
+    </HBox>
+
+    <!-- ── Summary bar ── -->
+    <HBox spacing="20" alignment="CENTER_LEFT"
+          style="-fx-background-color: white; -fx-padding: 10 18; -fx-background-radius: 10;
+                 -fx-border-color: #E2E8F0; -fx-border-radius: 10; -fx-border-width: 1;
+                 -fx-effect: dropshadow(gaussian, rgba(15,30,80,0.04), 6, 0, 0, 2);">
+        <Label fx:id="lblTong"       text="Tổng: 0"                styleClass="stat-mini" />
+        <Label text="|" style="-fx-text-fill: #CBD5E1;" />
+        <Label fx:id="lblChuaXuLy"  text="🔴  Chưa xử lý: 0"     styleClass="stat-mini" style="-fx-text-fill: #DC2626;" />
+        <Label text="|" style="-fx-text-fill: #CBD5E1;" />
+        <Label fx:id="lblDaXuLy"    text="🟢  Đã xử lý: 0"        styleClass="stat-mini" style="-fx-text-fill: #16A34A;" />
+        <Label text="|" style="-fx-text-fill: #CBD5E1;" />
+        <Label fx:id="lblKhangCao"  text="🟡  Kháng cáo: 0"       styleClass="stat-mini" style="-fx-text-fill: #D97706;" />
+    </HBox>
+
+    <!-- ── Bảng dữ liệu ── -->
+    <TableView fx:id="tblViPham" VBox.vgrow="ALWAYS"
+               styleClass="table-view"
+               style="-fx-pref-height: 400;">
+        <columns>
+            <TableColumn fx:id="colMaVP"     text="Mã VP"        prefWidth="100" />
+            <TableColumn fx:id="colSinhVien" text="Sinh viên"    prefWidth="180" />
+            <TableColumn fx:id="colLoai"     text="Loại vi phạm" prefWidth="150" />
+            <TableColumn fx:id="colNgay"     text="Ngày VP"      prefWidth="100" />
+            <TableColumn fx:id="colMucPhat"  text="Mức phạt"    prefWidth="110" />
+            <TableColumn fx:id="colMoTa"     text="Mô tả"        prefWidth="260" />
+            <TableColumn fx:id="colTrangThai" text="Trạng thái"  prefWidth="120" />
+        </columns>
+    </TableView>
+
+    <!-- ── Action bar ── -->
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Button text="✅  Đánh dấu Đã xử lý"  styleClass="btn-success"   onAction="#handleXuLy"     />
+        <Button text="🟡  Kháng cáo"            styleClass="btn-secondary" onAction="#handleKhangCao" />
+        <Button fx:id="btnDelete"
+                text="🗑️  Xoá"                  styleClass="btn-danger"    onAction="#handleDelete"   />
+        <Region HBox.hgrow="ALWAYS" />
+        <Label text="Double-click để xem chi tiết" style="-fx-text-fill: #94A3B8; -fx-font-size: 11px;" />
+    </HBox>
+</VBox>

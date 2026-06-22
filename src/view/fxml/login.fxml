@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+
+<!--
+    Phase 2 — Glassmorphism Login Screen
+    Root: StackPane with dark gradient background + centered glass card
+    All fx:id bindings preserved for LoginController compatibility
+-->
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:id="loginRoot"
+           fx:controller="controller.LoginController"
+           stylesheets="@../css/style.css"
+           styleClass="login-scene-root"
+           prefWidth="1080" prefHeight="640">
+
+    <!-- Dark background radial glow overlay -->
+    <Region styleClass="login-bg-overlay" />
+
+    <!-- Decorative accent overlay (bottom-right) -->
+    <Region style="-fx-background-color: linear-gradient(to top left,
+                       rgba(79,195,247,0.07), transparent);
+                   -fx-pref-width: 100000px; -fx-pref-height: 100000px;" />
+
+    <!-- ── Centered Glass Card ── -->
+    <HBox alignment="CENTER">
+
+        <HBox fx:id="loginCard" styleClass="login-glass-card" spacing="0">
+
+            <!-- ── LEFT: Brand panel ── -->
+            <VBox styleClass="login-glass-left" alignment="CENTER" spacing="22">
+
+                <!-- Logo circle -->
+                <VBox styleClass="login-icon-box" alignment="CENTER">
+                    <Label text="🏠" style="-fx-font-size: 54px;" />
+                </VBox>
+
+                <!-- Brand name + tagline -->
+                <VBox alignment="CENTER" spacing="8">
+                    <Label text="KTX Manager" styleClass="login-glass-brand" />
+                    <Label text="Hệ thống Quản lý Ký túc xá" styleClass="login-glass-tagline" />
+                </VBox>
+
+                <!-- Feature card -->
+                <VBox styleClass="login-feature-card" spacing="11"
+                      style="-fx-pref-width: 218px; -fx-padding: 16 20;">
+                    <Label text="✅  Quản lý Phòng &amp; Sinh viên"   styleClass="login-feature-item" />
+                    <Label text="✅  Hợp đồng &amp; Thanh toán"        styleClass="login-feature-item" />
+                    <Label text="✅  Thống kê &amp; Báo cáo"           styleClass="login-feature-item" />
+                    <Label text="✅  Quản lý Vi phạm"                   styleClass="login-feature-item" />
+                </VBox>
+
+                <!-- Version tag -->
+                <Label text="© 2026-2027 · Premium Edition"
+                       style="-fx-text-fill: rgba(255,255,255,0.28);
+                              -fx-font-size: 10px; -fx-letter-spacing: 0.3px;" />
+            </VBox>
+
+            <!-- ── RIGHT: Form panel ── -->
+            <VBox styleClass="login-glass-right" fx:id="formPanel" alignment="CENTER" spacing="13">
+
+                <!-- Header text -->
+                <Label text="Chào mừng trở lại 👋" styleClass="login-glass-title" />
+                <Label text="Đăng nhập để tiếp tục"
+                       styleClass="login-glass-subtitle"
+                       style="-fx-padding: 0 0 6 0;" />
+
+                <!-- Error message -->
+                <Label fx:id="lblError" styleClass="login-error-glass"
+                       visible="false" managed="false" maxWidth="316" />
+
+                <!-- Username field -->
+                <VBox spacing="5" maxWidth="316">
+                    <Label text="Tên đăng nhập" styleClass="login-form-label" />
+                    <TextField fx:id="txtUsername"
+                               styleClass="login-input-glass"
+                               promptText="Nhập tên đăng nhập..."
+                               prefWidth="316"
+                               onAction="#handleLogin" />
+                </VBox>
+
+                <!-- Password field -->
+                <VBox spacing="5" maxWidth="316">
+                    <Label text="Mật khẩu" styleClass="login-form-label" />
+                    <PasswordField fx:id="txtPassword"
+                                  styleClass="login-input-glass"
+                                  promptText="Nhập mật khẩu..."
+                                  prefWidth="316"
+                                  onAction="#handleLogin" />
+                </VBox>
+
+                <!-- Login button -->
+                <Button fx:id="btnLogin"
+                        text="&#x1F510;  Đăng Nhập"
+                        styleClass="login-btn-glass"
+                        onAction="#handleLogin"
+                        prefWidth="316" prefHeight="48"
+                        style="-fx-padding: 0;" />
+
+                <!-- Divider -->
+                <Label text="─────────  hoặc  ─────────"
+                       styleClass="login-divider-text" />
+
+                <!-- Register button -->
+                <Button fx:id="btnRegister"
+                        text="📝  Tạo tài khoản mới"
+                        styleClass="login-btn-outline-glass"
+                        onAction="#handleRegister"
+                        prefWidth="316" prefHeight="44"
+                        style="-fx-padding: 0;" />
+
+                <!-- Footer -->
+                <Label text="© 2026-2027 Dormitory Management System · Bảo mật &amp; An toàn"
+                       style="-fx-text-fill: rgba(255,255,255,0.22);
+                              -fx-font-size: 10.5px; -fx-padding: 6 0 0 0;" />
+            </VBox>
+
+        </HBox>
+    </HBox>
+
+</StackPane>

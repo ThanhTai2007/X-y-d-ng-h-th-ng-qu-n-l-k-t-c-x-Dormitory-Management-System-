@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.PasswordField?>
+
+<!--
+    Phase 2 — Glassmorphism Register Screen
+    Matched to login screen. All fx:id bindings preserved for RegisterController.
+-->
+<StackPane xmlns:fx="http://javafx.com/fxml"
+           fx:controller="controller.RegisterController"
+           stylesheets="@../css/style.css"
+           styleClass="login-scene-root"
+           prefWidth="1080" prefHeight="700">
+
+    <!-- Background radial glow -->
+    <Region styleClass="login-bg-overlay" />
+
+    <!-- Decorative teal accent blob -->
+    <Region style="-fx-background-color: radial-gradient(center 75% 78%, radius 28%,
+                       rgba(20,184,166,0.10), transparent);
+                   -fx-pref-width: 100000px; -fx-pref-height: 100000px;" />
+
+    <!-- ── Centered Glass Card ── -->
+    <HBox alignment="CENTER">
+
+        <HBox fx:id="loginCard" styleClass="login-glass-card" spacing="0">
+
+            <!-- ── LEFT: Brand panel ── -->
+            <VBox styleClass="login-glass-left" alignment="CENTER" spacing="22">
+
+                <!-- Logo circle -->
+                <VBox styleClass="login-icon-box" alignment="CENTER">
+                    <Label text="📝" style="-fx-font-size: 54px;" />
+                </VBox>
+
+                <!-- Brand + tagline -->
+                <VBox alignment="CENTER" spacing="8">
+                    <Label text="KTX Manager" styleClass="login-glass-brand" />
+                    <Label text="Đăng Ký Tài Khoản Mới" styleClass="login-glass-tagline" />
+                </VBox>
+
+                <!-- Feature card -->
+                <VBox styleClass="login-feature-card" spacing="11"
+                      style="-fx-pref-width: 218px; -fx-padding: 16 20;">
+                    <Label text="✅  Tài khoản Staff mặc định"   styleClass="login-feature-item" />
+                    <Label text="✅  Mật khẩu mã hoá BCrypt"      styleClass="login-feature-item" />
+                    <Label text="✅  Đăng nhập ngay sau khi tạo"  styleClass="login-feature-item" />
+                    <Label text="✅  Phân quyền tự động"           styleClass="login-feature-item" />
+                </VBox>
+
+                <!-- Version tag -->
+                <Label text="© 2026-2027 · Premium Edition"
+                       style="-fx-text-fill: rgba(255,255,255,0.28);
+                              -fx-font-size: 10px; -fx-letter-spacing: 0.3px;" />
+            </VBox>
+
+            <!-- ── RIGHT: Register form panel ── -->
+            <VBox styleClass="login-glass-right" fx:id="formPanel" alignment="CENTER" spacing="11">
+
+                <!-- Header -->
+                <Label text="Tạo Tài Khoản Mới ✨" styleClass="login-glass-title" />
+                <Label text="Điền thông tin bên dưới để đăng ký"
+                       styleClass="login-glass-subtitle"
+                       style="-fx-padding: 0 0 4 0;" />
+
+                <!-- Error message -->
+                <Label fx:id="lblError" styleClass="login-error-glass"
+                       visible="false" managed="false" maxWidth="316" />
+
+                <!-- Success message -->
+                <Label fx:id="lblSuccess" styleClass="login-success-glass"
+                       visible="false" managed="false" maxWidth="316" />
+
+                <!-- Username -->
+                <VBox spacing="4" maxWidth="316">
+                    <Label text="Tên đăng nhập *" styleClass="login-form-label" />
+                    <TextField fx:id="txtUsername"
+                               styleClass="login-input-glass"
+                               promptText="Tối thiểu 4 ký tự..."
+                               prefWidth="316" />
+                </VBox>
+
+                <!-- Ho Ten -->
+                <VBox spacing="4" maxWidth="316">
+                    <Label text="Họ và tên *" styleClass="login-form-label" />
+                    <TextField fx:id="txtHoTen"
+                               styleClass="login-input-glass"
+                               promptText="Nguyễn Văn A..."
+                               prefWidth="316" />
+                </VBox>
+
+                <!-- Password -->
+                <VBox spacing="4" maxWidth="316">
+                    <Label text="Mật khẩu *" styleClass="login-form-label" />
+                    <PasswordField fx:id="txtPassword"
+                                  styleClass="login-input-glass"
+                                  promptText="Tối thiểu 6 ký tự..."
+                                  prefWidth="316" />
+                </VBox>
+
+                <!-- Confirm Password -->
+                <VBox spacing="4" maxWidth="316">
+                    <Label text="Xác nhận mật khẩu *" styleClass="login-form-label" />
+                    <PasswordField fx:id="txtConfirmPassword"
+                                  styleClass="login-input-glass"
+                                  promptText="Nhập lại mật khẩu..."
+                                  prefWidth="316"
+                                  onAction="#handleRegister" />
+                </VBox>
+
+                <!-- Register button -->
+                <Button fx:id="btnRegister"
+                        text="📝  Đăng Ký Tài Khoản"
+                        styleClass="login-btn-glass"
+                        onAction="#handleRegister"
+                        prefWidth="316" prefHeight="46"
+                        style="-fx-padding: 0;" />
+
+                <!-- Back to login -->
+                <Button text="← Quay lại Đăng Nhập"
+                        styleClass="login-btn-outline-glass"
+                        onAction="#handleBackToLogin"
+                        prefWidth="316" prefHeight="40"
+                        style="-fx-padding: 0;" />
+
+            </VBox>
+
+        </HBox>
+    </HBox>
+
+</StackPane>
